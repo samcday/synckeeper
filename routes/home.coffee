@@ -1,2 +1,0 @@
-exports.home = (req, res) ->
-	
