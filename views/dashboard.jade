@@ -1,0 +1,33 @@
+h1 Hello, #{user.profile.name}
+
+| You're logged in! Rad!
+
+h2 Strava
+
+| Status:
+if isStravaConnected
+	| Connected
+else
+	| Disconnected
+
+p
+
+if !isStravaConnected
+	| You haven't yet connected SyncKeeper to Strava. 
+	| Connecting is as simple as providing your login details below.
+	br
+	b We will not store your password on our server.
+	br
+	| We only require your login details for initial connection. Your connection
+	| to this website is secured. (look at padlock etc etc)
+	br
+	if stravaError
+		| The login details provided were incorrect, please try again.
+	form(action=stravaConnectAction, method="POST")
+		label(for="email") Email:
+		input(type="text", name="email", id="email")
+		br
+		label(for="password") Password:
+		input(type="password", name="password", id="password")
+		br
+		input(type="submit")

@@ -4,6 +4,7 @@ url = require "url"
 config = exports
 mongo = config.mongo = {}
 runkeeper = config.runkeeper = {}
+strava = config.strava = {}
 session = config.session = {}
 
 # General configuration goes here.
@@ -19,6 +20,9 @@ _.extend runkeeper,
 			auth: "https://runkeeper.com/apps/authorize"
 			accessToken: "https://runkeeper.com/apps/token"
 		redirectUri: "/auth"
+
+_.extend strava,
+	endpoint: "https://www.strava.com/api/v2"
 
 # Env specific configuration goes here.
 if process.env.NODE_ENV is "production"

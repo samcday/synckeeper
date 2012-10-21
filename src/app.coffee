@@ -8,6 +8,7 @@ app = express()
 app.set "views", path.join __dirname, "..", "views"
 app.set "view engine", "jade"
 
+app.use express.bodyParser()
 app.use express.cookieParser()
 app.use express.session
 	secret: config.session.secret
@@ -29,11 +30,7 @@ app.configure(function(){
 });
 ###
 
-routes = require "./routes"
+(require "./routes") app
 
-app.get "/", routes.home
-app.get config.runkeeper.auth.redirectUri, routes.auth
-app.get "/register", routes.register
-app.post "/register", routes.registerSubmit
 
 app.listen process.env.PORT or 1234
