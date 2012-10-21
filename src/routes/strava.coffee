@@ -12,3 +12,9 @@ module.exports = (app) ->
 			req.user.save (err) ->
 				return next err if err
 				res.redirect ""
+	app.get "/strava/disconnect", middleware.getUser, (req, res, next) ->
+		req.user.strava.token = null
+		req.user.strava.athleteId = null
+		req.user.save (err) ->
+			return next err if err
+			res.redirect ""

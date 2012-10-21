@@ -1,5 +1,6 @@
 {get, post} = request = require "request"
 config = require "./config"
+util = require "./util"
 
 exports.accessToken = (code, cb) ->
 	reqOpts = 
@@ -16,11 +17,32 @@ exports.accessToken = (code, cb) ->
 		cb null, result.access_token
 
 exports.user = (accessToken, cb) ->
-	rkGet accessToken, "/user", "User", cb
+	rkGet(accessToken)
+		.resource("/user")
+		.type("User")
+		.go cb
 
 exports.profile = (accessToken, cb) ->
-	rkGet accessToken, "/profile", "Profile", cb
+	rkGet(accessToken)
+		.resource("/profile")
+		.type("Profile")
+		.go cb
 
+exports.fitnessActivities = (accessToken, since, cb) ->
+	if "function" is typeof since
+		cb = since
+		since = null
+
+	req = rkGet(accessToken)
+		.resource("/fitnessActivities")
+		.type("FitnessActivityFeed")
+
+	req.header "If-Modified-Since", (util.httpDate since) if since
+
+	req.go (err, result, resp) ->
+		return cb err if err
+		cb null, if resp.statusCode isnt 304 then result else []
+###
 rkGet = (accessToken, uri, type, cb) ->
 	reqOpts = 
 		headers:
@@ -31,3 +53,29 @@ rkGet = (accessToken, uri, type, cb) ->
 		result = JSON.parse body
 		cb result.error if result.error
 		cb null, result
+###
+
+rkGet = (accessToken) ->
+	reqOpts =
+		headers:
+			Authorization: "Bearer #{accessToken}"
+	resource = "/"
+
+	o = {}
+	o.resource = (_resource) ->
+		resource = _resource
+		return o
+	o.type = (type) -> 
+		reqOpts.headers.Accept = "application/vnd.com.runkeeper.#{type}+json"
+		return o
+	o.header = (name, value) ->
+		reqOpts.headers[name] = value
+		return o
+	o.go = (cb) ->
+		get config.runkeeper.endpoint + resource, reqOpts, (err, resp, body) ->
+			console.log arguments
+			return cb err if err
+			result = JSON.parse body if body
+			cb result.error if result?.error
+			cb null, result, resp
+	return o

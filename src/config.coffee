@@ -6,6 +6,7 @@ mongo = config.mongo = {}
 runkeeper = config.runkeeper = {}
 strava = config.strava = {}
 session = config.session = {}
+ironmq = config.ironmq = {}
 
 # General configuration goes here.
 _.extend session,
@@ -23,6 +24,12 @@ _.extend runkeeper,
 
 _.extend strava,
 	endpoint: "https://www.strava.com/api/v2"
+
+_.extend ironmq, 
+	hostname: "mq-aws-us-east-1.iron.io"
+	port: 11300
+	token: process.env.IRONMQ_TOKEN
+	project: process.env.IRONMQ_PROJECT
 
 # Env specific configuration goes here.
 if process.env.NODE_ENV is "production"
@@ -64,3 +71,5 @@ runkeeper.buildRedirectUrl = -> url.format
 	hostname: config.host
 	port: config.port
 	pathname: runkeeper.auth.redirectUri
+
+ironmq.host = -> "#{ironmq.hostname}:#{ironmq.port}"

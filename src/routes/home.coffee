@@ -89,3 +89,8 @@ module.exports = (app) ->
 			req.sesion.register = null
 			req.session.user = newUser.id
 			res.redirect ""
+
+
+	app.get "/test", middleware.getUser, (req, res) ->
+		runkeeper.fitnessActivities req.user.accessToken, (err, activities) ->
+			res.json activities
