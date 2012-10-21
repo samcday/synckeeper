@@ -34,5 +34,6 @@ routes = require "./routes"
 app.get "/", routes.home
 app.get config.runkeeper.auth.redirectUri, routes.auth
 app.get "/register", routes.register
+app.post "/register", routes.registerSubmit
 
 app.listen process.env.PORT or 1234

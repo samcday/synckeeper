@@ -9,6 +9,11 @@ UserSchema = module.exports = new Schema
 	accessToken:
 		type: String
 		required: true
+	profile:
+		name:
+			type: String
+		pic:
+			type: String
 
 UserSchema.statics.findByUserId = (userId, cb) ->
 	this.findOne { userId: userId }, cb

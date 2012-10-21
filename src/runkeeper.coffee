@@ -18,6 +18,9 @@ exports.accessToken = (code, cb) ->
 exports.user = (accessToken, cb) ->
 	rkGet accessToken, "/user", "User", cb
 
+exports.profile = (accessToken, cb) ->
+	rkGet accessToken, "/profile", "Profile", cb
+
 rkGet = (accessToken, uri, type, cb) ->
 	reqOpts = 
 		headers:

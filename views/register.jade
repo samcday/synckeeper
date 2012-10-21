@@ -1,0 +1,10 @@
+h1 Welcome, #{profile.name}
+img(src=profile.pic)
+br
+br
+br
+| Terms and stuff go here.
+form(action=action,method="POST")
+	input(type="checkbox", name="terms", id="terms", value="accept")
+	label(for="terms") I accept terms and stuff.
+	input(type="submit", value="Let's do it")
