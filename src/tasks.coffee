@@ -18,8 +18,9 @@ class QueueReader
 			msg = msgs.pop()
 			return process.nextTick self._read unless msg
 			try
-				self.handler msg, ->
-					msg.delete ->
+				data = JSON.parse msg.body
+				self.handler data, ->
+					msg.del ->
 						return process.nextTick self._read
 			catch e
 				return process.nextTick self._read
@@ -27,12 +28,8 @@ class QueueReader
 new QueueReader queues.activityFeed, taskHandlers.checkActivityFeed
 
 exports.queueCheckActivityFeed = (user) ->
-	queues.activityFeed.put { user: user }, {}
-###
-queues.activityFeed.get (err, msgs) ->
-	console.log arguments
-	msg = msgs.pop()
-	console.log msg
-	msg.del (cb) ->
+	queues.activityFeed.put (JSON.stringify { user: user }), {}, ->
 		console.log arguments
-###
+
+
+# exports.queueCheckActivityFeed 123

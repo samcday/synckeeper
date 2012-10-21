@@ -73,7 +73,7 @@ rkGet = (accessToken) ->
 		return o
 	o.go = (cb) ->
 		get config.runkeeper.endpoint + resource, reqOpts, (err, resp, body) ->
-			console.log arguments
+			console.log reqOpts
 			return cb err if err
 			result = JSON.parse body if body
 			cb result.error if result?.error

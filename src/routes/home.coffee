@@ -92,5 +92,5 @@ module.exports = (app) ->
 
 
 	app.get "/test", middleware.getUser, (req, res) ->
-		runkeeper.fitnessActivities req.user.accessToken, (err, activities) ->
+		runkeeper.fitnessActivities req.user.accessToken, new Date(2012,9,20), (err, activities) ->
 			res.json activities
