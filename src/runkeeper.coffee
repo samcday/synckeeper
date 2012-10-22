@@ -43,8 +43,12 @@ exports.fitnessActivities = (accessToken, since, cb) ->
 		return cb err if err
 		cb null, if resp.statusCode isnt 304 then result else []
 
-exports.activity = (accessToken, activity) ->
-	
+exports.activity = (accessToken, activityId, cb) ->
+	rkGet(accessToken)
+		.resource("/fitnessActivities/#{activityId}")
+		.type("FitnessActivity")
+		.go cb
+
 ###
 rkGet = (accessToken, uri, type, cb) ->
 	reqOpts = 
