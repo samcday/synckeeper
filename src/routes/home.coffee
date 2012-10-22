@@ -66,7 +66,7 @@ module.exports = (app) ->
 		unless data
 			return res.redirect ""
 
-		res.locals.action = "/register"
+		res.locals.action = "/registerSubmit"
 		res.locals.profile =
 			name: data.profile.name
 			pic: data.profile.normal_picture
@@ -86,7 +86,7 @@ module.exports = (app) ->
 		newUser.save (err) ->
 			# TODO: error handling. Validation errors too.
 			return next err if err
-			req.sesion.register = null
+			req.session.register = null
 			req.session.user = newUser.id
 			res.redirect ""
 

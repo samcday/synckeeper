@@ -11,5 +11,3 @@ ActivitySchema = module.exports = new Schema
 		index: true
 	type:
 		type: String
-	sync:
-		strava:
