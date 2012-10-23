@@ -4,7 +4,7 @@ This task will process a newly discovered Runkeeper activity. It will:
  * Populate the Activity document in our DB
  * Determine the timezone for the activity based on first geopoint geocoded with
    Yahoo Placefinder API.
- * Schedule a stravaUpload task if the User is connected to Strava.
+ * Schedule a stravaUpload task.
 ###
 async = require "async"
 runkeeper = require "../runkeeper"

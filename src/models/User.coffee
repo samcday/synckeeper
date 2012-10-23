@@ -16,6 +16,9 @@ UserSchema = module.exports = new Schema
 			type: String
 		pic:
 			type: String
+	timeOffset:
+		type: Number
+		required: true
 	strava:
 		token:
 			type: String

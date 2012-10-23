@@ -18,7 +18,9 @@ ActivitySchema = module.exports = new Schema
 	type:
 		type: String
 		required: true
-	
+	startTime:
+		type: Date
+		required: true
 
 ActivitySchema.statics.findByRunkeeperId = (runkeeperId, cb) ->
 	this.findOne { runkeeperId: runkeeperId }, cb
